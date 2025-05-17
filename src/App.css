@@ -6,12 +6,16 @@ header ul li {
     @apply px-3;
 }
 
+.header-color {
+    background: #272757;
+}
+
 .bg-primary {
-    background: rgb(85 81 227);
+    background: #505081
 }
 
 .bg-secondary {
-    background: #2b2d77
+    background:  #8686AC
 }
 
 .mobile-nav {
@@ -33,3 +37,15 @@ header ul li {
 html {
     scroll-behavior: smooth;
 }
+
+
+
+.profile-image {
+    width: 400px;         
+    height: 500px;        
+    border-radius: 100%;  
+    object-fit: cover;    
+    display: block;
+    margin: 0 auto;      
+  }
+  

@@ -1,59 +1,126 @@
-import websiteImage01 from '../Assets/ecommerce-websites.jpg'
-import websiteImage02 from '../Assets/food-ecommerce.jpg'
-import websiteImage03 from '../Assets/website-blog.jpg'
+import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion';
+import RightArrow from '../Assets/right_arrow.svg'
+import LeftArrow from '../Assets/left_arrow.svg'
+import RealEstateWebsite from '../Assets/image01.png'
+import SpicyWebsite from '../Assets/image02.png'
+import LoginSignUP from '../Assets/image03.png'
 
 
-export default function Projects (){
 
-    const config ={
-    Projects : [
-                    {
-                        image : websiteImage01,
-                        description : `A Ecommerce Website , Built with MERN Stack`,
-                        link : ''
-                    },
-                    {
-                        image : websiteImage02,
-                        description : `Food Ecommerce Website like Swiggy , Built with Angular & .Net`,
-                        link : ''
-                    },
-                    {
-                        image : websiteImage03,
-                        description : `Basic Blog Website Built with Next.js & MangoDB`,
-                        link : ''
-                    }
-                ]
+const Projects = () => {
+
+  
+git init
+
+    const projectsData = [
+        {
+          title: "Modern Real Estate Website Using React.js",
+          Show_more: <a href="https://real-estate-react-iey.web.app/"
+                     className='py-1 px-4 bg-blue-600 text-white flex justify-center hover:bg-red-600' 
+                     target='blank'>More</a> ,
+          image : RealEstateWebsite
+        },
+        {
+          title: "ORGANIC SPICES Using React.js & CSS",
+          Show_more: <a href="https://spicywebsite-jey.netlify.app/"
+                     className='py-1 px-4 bg-blue-600 text-white flex justify-center hover:bg-red-600' 
+                     target='blank'>More</a> ,
+          image : SpicyWebsite
+        },
+        {
+          title: "Basic User Login & Sign Up Form using React.js & CSS ",
+          Show_more: <a href="https://real-estate-react-iey.web.app/"
+                     className='py-1 px-4 bg-blue-600 text-white flex justify-center hover:bg-red-600' 
+                     target='blank'>More</a> ,
+          image : LoginSignUP
+        },
+       
+               
+      ];
+
+      
+
+    const [currentIndex , setCurrentIndex] = useState(0);
+    const [cardsToShow , setCardsToShow] = useState(1);
+
+    const nextProject = ()=>{
+        setCurrentIndex((prevIndex)=>(prevIndex + 1) % projectsData.length)
     }
-   
-    
 
-    return (
-        <section id='projects' className='flex flex-col py-20 px-5 justify-center bg-primary text-white'>
-            <div className='w-full py-5'>
-                <div className="flex-col justify-center px-10 py-5 ">
-                    <h1 className='font-bold text-4xl border-b-4 mb-5 border-secondary w-[140px]'>Projects</h1>
-                    <p>There are some of my best projects.
-                        I have built these with React ,
-                        MERN and Tailwind CSS. Check them out
-                    </p>
-                </div>
-            </div>
-            <div className='w-full flex justify-center'>
-                <div className='flex flex-col md:flex-row px-10 gap-5'>
-                    {config.Projects.map((projects)=>(
-                        <div className='relative'> 
-                            <img className='h-[200px] w-[400px]' src={projects.image}/>
-                            <div className='projects-desc'>
-                                <p className='text-center py-5 px-5 font-bold'>{projects.description}</p>
-                                <div className="flex justify-center" >
-                                    <a className="btn" target="_blank" href={projects.link}>View Project</a>
-                                </div>
+    const prevProjects = () =>{
+        setCurrentIndex((prevIndex)=>prevIndex === 0 ? projectsData.length-1 : prevIndex-1)
+    }
+
+    useEffect (()=>{
+        const updateCardsShow = ()=> {
+            if(window.innerWidth >= 1024){
+                setCardsToShow(projectsData.length);
+            }
+            else {
+                setCardsToShow(1);
+            }
+        }
+
+        updateCardsShow();
+
+        window.addEventListener('resize' , updateCardsShow);
+        return ()=>{
+            window.removeEventListener('resize',updateCardsShow);
+        }
+    } , []);
+
+  return (
+    <motion.div
+            initial = {{opacity : 0, x:-200}}
+            transition={{duration:1.5}}
+            whileInView={{opacity:1 , x:0}}
+            viewport={{once:true}}
+    className=' bg-primary mx-auto py-16 pt-20 px-6 md:px-20 lg:px-32 w-full overflow-hidden ' id='projects'>
+      <div className='flex justify-center'>
+        <h1 className='text-4xl  font-bold mb-4 text-white'>Pro<span className='text-black text-4xl'>jects</span> </h1>
+      </div>
+
+        {/* Silder button  */}
+
+        <div className='flex justify-end items-center mb-8'>
+            <button onClick={prevProjects}
+             className='p-3 bg-blue-200 rounded mr-2' aria-label='Previous Project'>
+                <img src={LeftArrow} alt="Previous" />
+            </button>
+            <button onClick={nextProject}
+             className='p-3 bg-blue-200 rounded mr-2' aria-label='Next Project'>
+                <img src={RightArrow} alt="Next" />
+            </button>
+        </div>
+
+        {/* Projects slider container */}
+
+        <div className='overflow-hidden'>
+            <div className='flex gap-8 transition-transform duration-500 ease-in-out'
+            style={{
+                transform : `translateX(-${(currentIndex * 100) / cardsToShow}%)`
+            }}>
+                {projectsData.map((project , index)=>(
+                    <div key={index} className='relative flex-shrink-0 w-full sm:w-1/3'>
+                        <img src={project.image} alt={project.title} className='w-full h-60 mb-14'/>
+                        <div className='absolute left-0 right-0 bottom-0 flex justify-center '>
+                            <div className='inline-block bg-white w-full px-4 py-2 shadow-sm h-20'>
+                                <h2 className='text-1xl font-semibold text-gray-800 mb-3 '>
+                                    {project.title}
+                                </h2>
+                                <p className='text-gray-500 text-sm'>
+                                    {project.Show_more} <span className='px-1'></span> {project.Link}
+                                </p>
                             </div>
                         </div>
-                    ))}
-                   
-                </div>
+                    </div>
+                ))}
             </div>
-        </section>
-    )
+        </div>
+
+    </motion.div>
+  )
 }
+
+export default Projects

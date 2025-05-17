@@ -6,10 +6,10 @@ export default function Header (){
     const [toggleMenu , setToggleMenu] = useState(false);
     return (
             <header className = "flex justify-between px-5 py-5 bg-secondary">
-                <a className="font-bold text-black" href = "1">Jeyakkanth</a>
+                <a className="font-bold text-black underline underline-offset-2 text-2xl hover:text-white" href = "1">JEY</a>
                 
                     <nav className="hidden md:block">
-                        <ul className="flex text-white">
+                        <ul className="flex text-black font-bold hover:text-white">
                             <li><a href="/">Home</a></li>
                             <li><a href="#about">About</a></li>
                             <li><a href="#projects">Projects</a></li>
